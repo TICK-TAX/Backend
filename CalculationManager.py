@@ -64,9 +64,6 @@ class CalculationManager:
             salary_above = self.salary_before_taxes - (self.tax_config.get_tax_30_min())
             self.result.tax_30_pay = round(salary_above * float(0.30), 2)
 
-    def count_tax_cess(self):
-        salary_above = (self.result.get_annual_tax_5() + self.result.get_annual_tax_10() + self.result.get_annual_tax_15() + self.result.get_annual_tax_20() + self.result.get_annual_tax_25() + self.result.get_annual_tax_30())
-        self.result.tax_cess_pay = round(salary_above * float(0.04), 2)
     # def count_ni_12(self):
     #     if self.salary_before_taxes > self.tax_config.get_year_ni_12():
     #         if self.salary_before_taxes > self.tax_config.get_year_ni_2():
@@ -79,7 +76,7 @@ class CalculationManager:
     #     if self.salary_before_taxes > self.tax_config.get_year_ni_2():
     #         salary_above = self.salary_before_taxes - self.tax_config.get_year_ni_2()
     #         self.result.ni_2_pay = round(salary_above * float(0.02), 2)
-    #
+    # 
     # def count_pension(self):
     #     if self.result.pension_percent != 0:
     #         pension_pay = self.result.salary_before_tax * self.result.pension_percent / 100
@@ -95,7 +92,6 @@ class CalculationManager:
                                        - self.result.get_annual_tax_15() \
                                        - self.result.get_annual_tax_10() \
                                        - self.result.get_annual_tax_5() \
-                                       - self.result.get_annual_tax_cess() \
                                        # - self.result.get_annual_ni_12() \
                                        # - self.result.get_annual_ni_2() \
                                        # - self.result.get_annual_pension()
