@@ -6,13 +6,13 @@ class Result:
         self.salary_before_tax = 0
         self.salary_after_tax = 0
 
+        self.tax_0_pay = 0
         self.tax_5_pay = 0
         self.tax_10_pay = 0
         self.tax_15_pay = 0
         self.tax_20_pay = 0
         self.tax_25_pay = 0
         self.tax_30_pay = 0
-        self.tax_cess_pay = 0
         # self.pension_percent = 0
         # self.pension = 0
 
@@ -26,15 +26,15 @@ class Result:
     def get_day(self, value):
         return round(value / (52 * 5), 2)
 
-    # TAX FREE
-    def get_annual_tax_free(self):
-        return self.get_annual(self.tax_free)
-
-    def get_month_tax_free(self):
-        return self.get_month(self.tax_free)
-
-    def get_day_tax_free(self):
-        return self.get_day(self.tax_free)
+    # # TAX FREE
+    # def get_annual_tax_free(self):
+    #     return self.get_annual(self.tax_free)
+    #
+    # def get_month_tax_free(self):
+    #     return self.get_month(self.tax_free)
+    #
+    # def get_day_tax_free(self):
+    #     return self.get_day(self.tax_free)
 
     # SALARY BEFORE TAX
     def get_annual_salary_before_tax(self):
@@ -55,6 +55,16 @@ class Result:
 
     def get_day_salary_after_tax(self):
         return self.get_day(self.salary_after_tax)
+
+    # TAX 0%
+    def get_annual_tax_0(self):
+        return self.get_annual(self.tax_0_pay)
+
+    def get_month_tax_0(self):
+        return self.get_month(self.tax_0_pay)
+
+    def get_day_tax_0(self):
+        return self.get_day(self.tax_0_pay)
 
     # TAX 5%
     def get_annual_tax_5(self):
@@ -98,7 +108,7 @@ class Result:
 
     # TAX 25%
     def get_annual_tax_25(self):
-        return self.get_annual(self.tax_10_pay)
+        return self.get_annual(self.tax_25_pay)
 
     def get_month_tax_25(self):
         return self.get_month(self.tax_25_pay)
@@ -115,16 +125,6 @@ class Result:
 
     def get_day_tax_30(self):
         return self.get_day(self.tax_30_pay)
-
-    # TAX CESS
-    def get_annual_tax_cess(self):
-        return self.get_annual(self.tax_cess_pay)
-
-    def get_month_tax_cess(self):
-        return self.get_month(self.tax_cess_pay)
-
-    def get_day_tax_cess(self):
-        return self.get_day(self.tax_cess_pay)
 
     # # NATIONAL INSURANCE 12%
     # def get_annual_ni_12(self):
