@@ -12,8 +12,10 @@ class TaxConfig:
             attr = values[0]
             value = float(values[1])
 
-            if attr == 'tax_free_allocate':
-                self.TAX_FREE = value
+            if attr == 'tax_0_percent_minimum_range':
+                self.TAX_0_MIN = value
+            elif attr == 'tax_0_percent_maximum_range':
+                self.TAX_0_MAX = value
             elif attr == 'tax_5_percent_minimum_range':
                 self.TAX_5_MIN = value
             elif attr == 'tax_5_percent_maximum_range':
@@ -41,8 +43,11 @@ class TaxConfig:
             # elif attr == 'national_insurance_2_percent_minimum_range':
             #     self.YEAR_NI_2 = value
 
-    def get_tax_free(self):
-        return self.TAX_FREE
+    def get_tax_0_min(self):
+        return self.TAX_0_MIN
+
+    def get_tax_0_max(self):
+        return self.TAX_0_MAX
 
     def get_tax_5_min(self):
         return self.TAX_5_MIN
