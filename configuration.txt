@@ -1,7 +1,8 @@
 # Configuration 2021
 
 # All below values should be annual
-tax_free_allocate=250000
+tax_0_percent_minimum_range=0
+tax_0_percent_maximum_range=250000
 tax_5_percent_minimum_range=250000
 tax_5_percent_maximum_range=500000
 tax_10_percent_minimum_range=500000
