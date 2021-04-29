@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, jsonify  , url_for , flash, redirect
+from flask import Flask, render_template, request, jsonify  , url_for , flash, redirect, abort 
 from flask_sqlalchemy import SQLAlchemy  
 from  datetime import datetime
 from flask_pymongo import PyMongo
 from forms import RegistrationForm, LoginForm
 from datetime import datetime
+from CalculationManager import CalculationManager
 
 
 
@@ -12,8 +13,17 @@ from datetime import datetime
 
 app = Flask(__name__ , template_folder='template', static_folder="static")
 app.config['SECRET_KEY'] = '7c22cdd8fc00ed5188a0f2d98f972990'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/ticktax'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
+app.config['STRIPE_PUBLIC_KEY']= 'pk_test_51IjQ9zSC7Z8k5EKQviIiZmr42H6MepB3FAXFyrpJDC7OzRJV8Q3gu5bV8GkNnsOhLTvWdH8KRcIy4fkgyLVYoazw00xYS6pB0W'
+
+app.config['STRIPE_SECTRET_KEY']='sk_test_51IjQ9zSC7Z8k5EKQi24kRVnOmw1NPfP38FIcZElRFFg5EEvGiCeb6XENsMyJ7VIVotAL8sJ3PAEJWT9SqMuvTFda00nDRcDfdh'
+
 db=SQLAlchemy(app)
+
+
+
+
 
 class Profile(db.Model):
 
@@ -21,10 +31,12 @@ class Profile(db.Model):
     sno = db.Column(db.Integer, primary_key=True) 
     name = db.Column(db.String(40), unique=False, nullable=False)
     email= db.Column(db.String(150), unique=False, nullable=False)
-    dob = db.Column(db.Integer, unique=True, nullable=False)
+    DOB = db.Column(db.Integer, unique=True, nullable=False)
     contactno = db.Column(db.Integer, unique=True, nullable=False)
 
 
+    def __repr__(self):
+        return '<Post %r>' % self.name
 
 
 
@@ -34,10 +46,13 @@ def home_page():
         name = request.form.get('Name')
         email = request.form.get('Email')
         password = request.form.get('password')
-
+        
     return render_template('index.html')
     #return 'Hello, World!'
 
+@app.route('/index.html', )
+def index_page():
+    return render_template('index.html')
 
   
 @app.route('/home.html', methods=["GET", "POST"])
@@ -54,7 +69,11 @@ def page():
         dob = request.form["DOB"]
         contactNumber= request.form["ContactNumber"]
         # Gender = request.form["Gender"]
-        print(name + " " + email + " " + dob)
+        
+        entry=Profile(name=name, email=email, DOB=dob, contactno=contactNumber)
+        db.session.add(entry)
+        
+
     return render_template('profile.html')
 
 @app.route('/profile2.html', methods=["GET", "POST"])
@@ -75,29 +94,43 @@ def profile3_page():
 
 
 
-@app.route('/calculator.html', methods=["GET", "POST"])
-def calculator_page():
-    if request.method== "POST":
-        income= request.form.get("income from salary")
-        incomeasset= request.form.get("income from other sources")
-    
-    
-    return render_template('calculator.html')
+@app.route("/tax.html", methods=['GET'])
+def redirection():
+    return redirect(url_for('tax_calculator'))
 
 
-@app.route('/calculator3.html', methods=["GET", "POST"])
-def calculator3_page():
+@app.route("/count", methods=['GET'])
+def tax_calculator():
+    provided_salary = request.args.get('providedSalary')
+    show_description = request.args.get('showDescription')
 
-#     if request.method == "POST":
-     return render_template("calculator3.html")
+    if not provided_salary:
+        return render_template('tax.html', result=None)
+
+    try:
+        int(provided_salary)
+    except ValueError:
+        abort(400)
 
 
-@app.route('/calculator2.html', methods=["GET", "POST"])
-def calculator2_page():
+    calculation_manager = CalculationManager(float(provided_salary))
+    calculation_manager.count_tax_0()
+    calculation_manager.count_tax_5()
+    calculation_manager.count_tax_10()
+    calculation_manager.count_tax_15()
+    calculation_manager.count_tax_20()
+    calculation_manager.count_tax_25()
+    calculation_manager.count_tax_30()
 
 
+    calculation_manager.count_salary_after_taxes()
 
-    return render_template('calculator2.html')
+    return render_template('tax.html',
+                           result=calculation_manager.get_result(),
+                           provided_salary=provided_salary,
+                           calculation_manager=CalculationManager,
+                           show_description=show_description)
+
 
 
 @app.route('/payments.html', methods=["GET", "POST"])
@@ -119,9 +152,9 @@ def payemnts3_page():
 def documents_page():
     return render_template('documents.html')
 
-@app.route('/navigation.html', methods=["GET", "POST"])
+@app.route('/finances.html', methods=["GET", "POST"])
 def navigation_page():
-    return render_template('navigation.html')
+    return render_template('finances.html')
 
 @app.route('/calendar.html', methods=["GET", "POST"])
 def calendar_page():
@@ -134,5 +167,6 @@ def dashboard_page():
 
 
 if  __name__ == "__main__":
+    db.create_all()
     app.run(debug=True, port=8000)  
     
