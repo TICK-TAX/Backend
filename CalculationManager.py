@@ -4,17 +4,14 @@ from TaxConfig import TaxConfig
 
 class CalculationManager:
 
-    # PENSION = 0
+    
 
     tax_config = TaxConfig()
 
     def __init__(self, provided_salary):
         self.salary_before_taxes = provided_salary
-        # self.PENSION = provided_pension
         self.result = Result()
         self.result.salary_before_tax = provided_salary
-        # self.result.pension_percent = provided_pension
-        # self.result.tax_free = self.tax_config.get_tax_free()
 
     def get_result(self):
         return self.result
@@ -69,26 +66,6 @@ class CalculationManager:
             salary_above = self.salary_before_taxes - (self.tax_config.get_tax_30_min())
             self.result.tax_30_pay = round(salary_above * float(0.30), 2)
 
-    # def count_ni_12(self):
-    #     if self.salary_before_taxes > self.tax_config.get_year_ni_12():
-    #         if self.salary_before_taxes > self.tax_config.get_year_ni_2():
-    #             salary_above = self.tax_config.get_year_ni_2() - self.tax_config.get_year_ni_12()
-    #         else:
-    #             salary_above = self.salary_before_taxes - self.tax_config.get_year_ni_12()
-    #         self.result.ni_12_pay = round(salary_above * float(0.12), 2)
-    #
-    # def count_ni_2(self):
-    #     if self.salary_before_taxes > self.tax_config.get_year_ni_2():
-    #         salary_above = self.salary_before_taxes - self.tax_config.get_year_ni_2()
-    #         self.result.ni_2_pay = round(salary_above * float(0.02), 2)
-    #
-    # def count_pension(self):
-    #     if self.result.pension_percent != 0:
-    #         pension_pay = self.result.salary_before_tax * self.result.pension_percent / 100
-    #         self.result.salary_after_tax = self.result.salary_after_tax - pension_pay
-    #         self.PENSION = pension_pay
-    #         self.result.pension = pension_pay
-
     def count_salary_after_taxes(self):
         self.result.salary_after_tax = self.result.salary_before_tax \
                                        - self.result.get_annual_tax_30() \
@@ -98,6 +75,3 @@ class CalculationManager:
                                        - self.result.get_annual_tax_10() \
                                        - self.result.get_annual_tax_5() \
                                        - self.result.get_annual_tax_0() \
-                                       # - self.result.get_annual_ni_12() \
-                                       # - self.result.get_annual_ni_2() \
-                                       # - self.result.get_annual_pension()
