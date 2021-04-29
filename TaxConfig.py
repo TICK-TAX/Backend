@@ -38,10 +38,7 @@ class TaxConfig:
                 self.TAX_25_MAX = value
             elif attr == 'tax_30_percent_minimum_range':
                 self.TAX_30_MIN = value
-            # elif attr == 'national_insurance_12_percent_minimum_range':
-            #     self.YEAR_NI_12 = value
-            # elif attr == 'national_insurance_2_percent_minimum_range':
-            #     self.YEAR_NI_2 = value
+
 
     def get_tax_0_min(self):
         return self.TAX_0_MIN
@@ -81,9 +78,3 @@ class TaxConfig:
 
     def get_tax_30_min(self):
         return self.TAX_30_MIN
-
-    # def get_year_ni_12(self):
-    #     return self.YEAR_NI_12
-    #
-    # def get_year_ni_2(self):
-    #     return self.YEAR_NI_2
