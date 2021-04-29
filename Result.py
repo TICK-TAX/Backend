@@ -13,8 +13,6 @@ class Result:
         self.tax_20_pay = 0
         self.tax_25_pay = 0
         self.tax_30_pay = 0
-        # self.pension_percent = 0
-        # self.pension = 0
 
     def get_annual(self, value):
         return round(value, 2)
@@ -22,20 +20,10 @@ class Result:
     def get_month(self, value):
         return round(value / 12, 2)
 
-    # Count based on 5 working days and 52 weeks in a year.
     def get_day(self, value):
         return round(value / (52 * 5), 2)
 
-    # # TAX FREE
-    # def get_annual_tax_free(self):
-    #     return self.get_annual(self.tax_free)
-    #
-    # def get_month_tax_free(self):
-    #     return self.get_month(self.tax_free)
-    #
-    # def get_day_tax_free(self):
-    #     return self.get_day(self.tax_free)
-
+    
     # SALARY BEFORE TAX
     def get_annual_salary_before_tax(self):
         return self.get_annual(self.salary_before_tax)
@@ -125,33 +113,3 @@ class Result:
 
     def get_day_tax_30(self):
         return self.get_day(self.tax_30_pay)
-
-    # # NATIONAL INSURANCE 12%
-    # def get_annual_ni_12(self):
-    #     return self.get_annual(self.ni_12_pay)
-    #
-    # def get_month_ni_12(self):
-    #     return self.get_month(self.ni_12_pay)
-    #
-    # def get_day_ni_12(self):
-    #     return self.get_day(self.ni_12_pay)
-    #
-    # # NATIONAL INSURANCE 2%
-    # def get_annual_ni_2(self):
-    #     return self.get_annual(self.ni_2_pay)
-    #
-    # def get_month_ni_2(self):
-    #     return self.get_month(self.ni_2_pay)
-    #
-    # def get_day_ni_2(self):
-    #     return self.get_day(self.ni_2_pay)
-    #
-    # # PENSION
-    # def get_annual_pension(self):
-    #     return self.get_annual(self.pension)
-    #
-    # def get_month_pension(self):
-    #     return self.get_month(self.pension)
-    #
-    # def get_day_pension(self):
-    #     return self.get_day(self.pension)
